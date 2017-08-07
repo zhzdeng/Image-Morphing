@@ -1,4 +1,4 @@
-FLAG = -I/usr/X11R6/include -L/usr/X11R6/lib -lX11
+FLAG = -I/usr/X11R6/include -L/usr/X11R6/lib -lX11 -lpthread
 OBJECT = main.o Morphing.o delaunay.o
 PROJECT = morphing
 CC = g++
@@ -10,6 +10,6 @@ Morphing.o: Morphing.hpp delaunay.hpp CImg.h Morphing.cpp
 	${CC} -c Morphing.cpp ${FLAG}
 delaunay.o: delaunay.hpp delaunay.cpp
 	${CC} -c delaunay.cpp
-clear:
+clean:
 	-rm ${OBJECT}
 	-rm ${PROJECT}

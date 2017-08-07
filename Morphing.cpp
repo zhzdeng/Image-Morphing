@@ -7,7 +7,7 @@ const unsigned char color[] = {0, 0, 255};
 
 
 vector<Point> Morphing::readPointsFromFile(string fileName) {
-  ifstream file(fileName);
+  ifstream file(fileName.c_str());
   if (!file.is_open())
     { throw string("Morphing::readPointsFromFile 文件打开失败, 检查文件 ")
                     + fileName + "是否存在"; }
@@ -69,7 +69,7 @@ void Morphing::readPointsFromScreen(const CImg<float>& src,
 
 
 void Morphing::savePointsToFile(const vector<Point>& points, string fileName) {
-  ofstream file(fileName);
+  ofstream file(fileName.c_str());
   if (!file.is_open())
     { throw string("Morphing::savePointsToFile: 文件保存失败"); }
   int size = points.size();
