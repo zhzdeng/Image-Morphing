@@ -5,4 +5,4 @@
 
 ## Thanks
 - [delaunay](https://github.com/eloraiby/delaunay)
-- CImg
+- [CImg](http://www.cimg.eu/)

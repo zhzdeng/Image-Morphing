@@ -20,7 +20,7 @@ int main(int argc, char const *argv[]) {
     CImg<float> srcImg("1.jpg");
     CImg<float> detImg("2.jpg");
     try {
-      morph.run(srcImg, detImg, "srcPoints.txt", "detPoints.txt");
+      // morph.run(srcImg, detImg, "srcPoints.txt", "detPoints.txt");
     } catch (string s) {
       cout << s << endl;
     }

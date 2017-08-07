@@ -4,6 +4,7 @@ PROJECT = morphing
 CC = g++
 goal: ${OBJECT}
 	${CC} ${OBJECT} ${FLAG} -o ${PROJECT}
+	@-mkdir output
 main.o: Morphing.hpp main.cpp
 	${CC} -c main.cpp ${FLAG}
 Morphing.o: Morphing.hpp delaunay.hpp CImg.h Morphing.cpp
