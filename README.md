@@ -1,5 +1,20 @@
 # Image-Morphing
-## build
+
+## Dependence
+ImageMagick
+
+Ubuntu
+```
+sudo apt-get install imagemagick
+```
+
+MacOS
+```
+brew install imagemagick
+```
+
+
+## Build
 ### Linux
 
 ```
@@ -11,12 +26,24 @@ make
 ### MacOS
 ### Precondition
 install [Quartz](https://www.xquartz.org/)
-### Install
 ```
 git clone git@github.com:zhzdeng/Image-Morphing.git
 cd Image-Morphing
 make
 ./morphing -s input/1.jpg -d input/2.jpg
+```
+
+## Install
+```
+sudo make install
+```
+
+## Usage
+```
+morphing -s     source image
+         -d     destination image
+         [-o]   output directory
+         [-n]   the number of transitional images
 ```
 
 ## Example
