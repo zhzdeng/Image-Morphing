@@ -82,7 +82,7 @@ int Morphing::whichtriangle(const vector<Triangle>& triangles, int x, int y) {
   }
   char intToStr[20];
   sprintf(intToStr, "(%d, %d)" , x, y);
-  throw string("Morphing::whichtriangle 异常, 该点不在任何三角形中 ") + intToStr;
+  throw string("Morphing::whichtriangle error") + intToStr;
 }
 
 /**
@@ -149,10 +149,10 @@ void Morphing::morphing(const CImg<float> &srcImg,
   const double STEP = alpha;
   for (int i = 0; i < num; i++, alpha += STEP) {
     vector<Triangle> midTriangels;
-    for (int i = 0; i < triSize; i++) {
+    for (int j = 0; j < triSize; j++) {
       // 三角形运算
-      midTriangels.push_back(srcTriangles[i] * (1 - alpha)
-                           + detTriangles[i] * alpha);
+      midTriangels.push_back(srcTriangles[j] * (1 - alpha)
+                           + detTriangles[j] * alpha);
     }
 
     vector<CImg<float> > matrixsToSrc, matrixsToDet;
@@ -195,6 +195,9 @@ void Morphing::morphing(const CImg<float> &srcImg,
 
     try {
       midImg.save_jpeg(fileName.c_str());
+      char str[20];
+      sprintf(str, "[ %.1f%% ]", 100.0 * i / num);
+      cout << string(str) << endl;
     } catch(...) {
       throw string("directory error, directory: " + directory);
     }

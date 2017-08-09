@@ -1,3 +1,4 @@
 output/*
-*.o
+build/
+bin/
 morphing
