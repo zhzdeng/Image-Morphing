@@ -1,6 +1,6 @@
 # Image-Morphing
 ## build
-###Linux
+### Linux
 
 ```
 git clone git@github.com:zhzdeng/Image-Morphing.git
@@ -20,9 +20,12 @@ make
 ```
 
 ## Example
-example
+- example
+
 ![](./pic/example.gif)
-result
+
+- result
+
 ![](./pic/result.gif)
 
 ## JPG To MP4

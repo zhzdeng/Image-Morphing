@@ -16,7 +16,7 @@ RCOMPILE_FLAGS = -D NDEBUG
 # Additional debug-specific flags
 DCOMPILE_FLAGS = -D DEBUG
 # Add additional include paths
-INCLUDES = -I $(SRC_PATH):/usr/X11R6/include
+INCLUDES = -I$(SRC_PATH) -I/usr/X11R6/include
 # General linker settings
 LINK_FLAGS = -L/usr/X11R6/lib -lX11 -lpthread
 # Additional release-specific linker settings
