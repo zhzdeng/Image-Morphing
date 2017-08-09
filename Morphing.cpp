@@ -48,8 +48,6 @@ CImg<float> Morphing::calculateMatrix(const Point& srcPoint1,
 
 /**
  * calculate Transfor matrixs
- * @param srcTri  [description]
- * @param detTri  [description]
  * @param matrixs output
  */
 void Morphing::calculateMatrixs(const vector<Triangle> &srcTri,
@@ -69,10 +67,6 @@ void Morphing::calculateMatrixs(const vector<Triangle> &srcTri,
 
 /**
  * find the triangle when given the point(x, y)
- * @param  triangles [description]
- * @param  x         [description]
- * @param  y         [description]
- * @return           [description]
  */
 int Morphing::whichtriangle(const vector<Triangle>& triangles, int x, int y) {
   int size = triangles.size();
@@ -93,11 +87,6 @@ int Morphing::whichtriangle(const vector<Triangle>& triangles, int x, int y) {
 
 /**
  * linear transformation;
- * @param matrix [description]
- * @param srcX   [description]
- * @param srcY   [description]
- * @param detX   [description]
- * @param detY   [description]
  */
 void Morphing::lineTranf(CImg<float> matrix, const int srcX, const int srcY,
                                    int &detX, int &detY) {
@@ -131,21 +120,16 @@ double Morphing::calculateTriArea(const Point& a, const Point& b,
 
 
 /**
- * 计算对应三角形的映射矩阵
- * @param src 原图的标记点集
- * @param det 目标图的标记点集
- * @param tri 目标点集的三角剖分关系
- * @param num 生成中间图的数量
+ * @param num        the Transitional Picture Num
  */
 void Morphing::morphing(const CImg<float> &srcImg,
                         const CImg<float> &detImg,
                         const vector<Point>& srcPoints,
                         const vector<Point>& detPoints,
-                        const Delaunay* p_delaunay, int num) {
+                        const Delaunay* p_delaunay, int num,
+                        string directory) {
   /**
-   * 1. 计算中间图像的三角形位置
-   * 先将原图和目标图的三角形位置保存在数据结构 vector<Triangle>数据结构中
-   * 中间图像的三角形位置用数据结构 vector<Triangle> triLoc;
+   * 1. calculate triangles in mid Img
    */
   vector<Triangle> srcTriangles, detTriangles;
   calculateTrisArea(srcTriangles);
@@ -172,20 +156,15 @@ void Morphing::morphing(const CImg<float> &srcImg,
     }
 
     vector<CImg<float> > matrixsToSrc, matrixsToDet;
+
   /**
-   * 2. 计算映射矩阵 输入 vector<Triangle> vector<Triangle>
-   *               输出 vector<CImg<flost> > matrixs
-   *               calculateMatrixs 的到映射矩阵
+   * 2. calculate the mapping matrix
    */
     calculateMatrixs(midTriangels, srcTriangles, matrixsToSrc);
     calculateMatrixs(midTriangels, detTriangles, matrixsToDet);
 
   /**
-   * 3. 进行三角映射,需要有原图的映射点A 和 结果图的映射点B
-   *   3.1 判断点再哪个三角形中
-   *     a) 计算三角形面积 calculateTrisArea
-   *     b) 调用whichtriangle
-   *   3.2 找到映射之后，用 alpha * A + (1 - alpha) * B
+   * 3. Triangle map
    */
     calculateTrisArea(midTriangels);
     CImg<float> midImg = detImg;
@@ -205,19 +184,26 @@ void Morphing::morphing(const CImg<float> &srcImg,
     }
 
   /**
-   * 4. 保存中间结果
+   * 4. save transitional Picture Num
    */
     char intToStr[20];
     sprintf(intToStr, "%d" , i);
-    string fileName("result/");
+
+    if (directory[directory.size() - 1] != '/') directory += "/";
+    string fileName(directory);
     fileName = fileName + intToStr + ".jpg";
-    midImg.save_jpeg(fileName.c_str());
+
+    try {
+      midImg.save_jpeg(fileName.c_str());
+    } catch(...) {
+      throw string("directory error, directory: " + directory);
+    }
   }
 }
 
 
 
-// 对给定的标记点集计算三角剖分
+// delaunay
 Delaunay* Morphing::triangulation(const vector<Point>& points) {
   int size = points.size();
   Point * p_points = new Point[size];
@@ -279,14 +265,12 @@ void Morphing::readPointsFromScreen(const CImg<float>& src,
 
 
 /**
- * 封装好的函数，该函数将调用上面的方法完整整个 Morphing 流程
- * @param src 原图
- * @param det 目标图
- * @param num 生成中间图的数量
+ * @param num  the Transitional Picture Num
  */
-void Morphing::run(const CImg<float>& src, const CImg<float>& det, int num) {
+void Morphing::run(const CImg<float>& src, const CImg<float>& det, int num,
+                  string directory) {
   vector<Point> srcPoints, detPoints;
   readPointsFromScreen(src, det, srcPoints, detPoints);
   triangulation(detPoints);
-  morphing(src, det, srcPoints, detPoints, delaunay, num);
+  morphing(src, det, srcPoints, detPoints, delaunay, num, directory);
 }
