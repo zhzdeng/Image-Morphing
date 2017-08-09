@@ -249,7 +249,7 @@ void Morphing::readPointsFromScreen(const CImg<float>& src,
     if (disp.button()&1) {
       int x = disp.mouse_x();
       int y = disp.mouse_y();
-      cout << "x: "   << x << ", y: " << y << endl;
+      // cout << "x: "   << x << ", y: " << y << endl;
       if (issrcImg) {
         disp.display(detImg);
         srcImg.draw_circle(x, y, 3, color);

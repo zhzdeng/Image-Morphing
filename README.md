@@ -25,6 +25,11 @@ example
 result
 ![](./pic/result.gif)
 
+## JPG To MP4
+```
+ffmpeg -r 12 -i ./%d.jpg -vcodec mpeg4 ./video.mp4
+```
+
 ## Thanks to
 - [delaunay](https://github.com/eloraiby/delaunay)
 - [CImg](http://www.cimg.eu/)
